@@ -1,0 +1,36 @@
+@import '../../global.less';
+
+.todo-list-wrap {
+  margin-top: 15px;
+  box-shadow: @primary-box-shadow-color;
+  padding: 10px;
+  border-radius: 8px;
+  .title {
+    font-size: @title-size;
+    font-weight: bolder;
+    line-height: 45px;
+    border-bottom: 1px @primary-border-color solid;
+    padding-left: @normal-space-size;
+    margin-bottom: @normal-space-size;
+  }
+  .list-wrap {
+    .item {
+      padding-left: 28px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid @primary-border-color;
+      margin-bottom: @normal-space-size;
+      .left-info {
+        width: 60%;
+        .todo-name {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+      .right-action {
+        flex: 1;
+      }
+    }
+  }
+}

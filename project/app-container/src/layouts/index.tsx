@@ -28,14 +28,14 @@ export default class BasicLayout extends Component<any, any> {
 
   state = {
     collapsed: false,
-    openKeys: ['/comp'],
+    openKeys: [],
   };
 
   onOpenChange = (openKeys: React.Key[]) => {
     const latestOpenKey: React.Key | undefined = openKeys.find(
       (key: React.Key) => this.state.openKeys.indexOf(String(key)) === -1,
     );
-    // console.log('latestOpenKey', latestOpenKey);
+    console.log('latestOpenKey', latestOpenKey);
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
     } else {
@@ -66,10 +66,10 @@ export default class BasicLayout extends Component<any, any> {
       }).meta;
       document.title = matchRouteMeta
         ? matchRouteMeta.title
-        : 'React.js Template';
+        : 'React.js MicroApp';
     } catch (error) {
       console.warn(error);
-      document.title = 'React.js Template';
+      document.title = 'React.js MicroApp';
     }
   }
 
@@ -126,7 +126,7 @@ export default class BasicLayout extends Component<any, any> {
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
             <img src={require('@/assets/images/logo.png')} height={40} />
-            <span>{!this.state.collapsed ? 'React.js Template' : ''}</span>
+            <span>{!this.state.collapsed ? 'React.js MicroApp' : ''}</span>
           </div>
           <Menu
             theme="dark"

@@ -7,16 +7,16 @@ export default defineConfig({
       // 注册子应用信息
       apps: [
         {
-          name: 'app-common', // 唯一 id
-          entry: '//localhost:8002', // html entry
+          name: 'app-common', // 公共服务
+          entry: '//localhost:8002',
           // 子应用通过钩子函数的参数props可以拿到这里传入的值
           props: {
             token: 'XXXXXXX',
           },
         },
         {
-          name: 'child2', // 唯一 id
-          entry: '//localhost:8001', // html entry
+          name: 'app-device', // 设备服务
+          entry: '//localhost:8001',
           // 子应用通过钩子函数的参数props可以拿到这里传入的值
           props: {
             token: 'XXXXXXX',
@@ -41,13 +41,18 @@ export default defineConfig({
           path: '/home',
           component: '@/pages/home/index',
           meta: { title: '首页' },
-          Routes: ['./route/praviteRoute.tsx'],
         },
+        // 公共服务模块
         {
           name: 'app-common',
-          icon: 'smile',
-          path: '/app-common',
+          path: '/common',
           microApp: 'app-common',
+        },
+        // 设备服务模块
+        {
+          name: 'app-device',
+          path: '/device',
+          microApp: 'app-device',
         },
       ],
     },

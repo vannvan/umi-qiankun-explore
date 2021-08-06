@@ -38,15 +38,15 @@ export default [
     children: [{ name: 'result', path: '/other/result', id: 41 }],
   },
   {
-    name: '导航',
+    name: '子应用',
     id: 5,
     path: '/navone',
     icon: <InteractionOutlined />,
     children: [
-      { name: 'page1', path: '/navone/page1', id: 51 },
+      { name: '公共模块', path: '/common', id: 51 },
       {
-        name: 'page2',
-        path: '/navone/page2',
+        name: '设备管理',
+        path: '/device',
         id: 52,
       },
     ],

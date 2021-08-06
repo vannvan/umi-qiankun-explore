@@ -18,7 +18,7 @@ export default () => {
   return (
     <>
       <div className="welcome">
-        <h1>Hi!欢迎使用ww-react-cli</h1>
+        <h1>Hi!欢迎使用React.js MicroApp</h1>
         <p>轻松搭建react@umi项目模板，快速成型，提升研发效率</p>
       </div>
       <Row style={PrimaryContent}>

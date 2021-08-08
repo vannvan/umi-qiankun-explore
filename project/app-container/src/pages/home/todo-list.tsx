@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { Badge, Dropdown, Menu } from 'antd';
 
 import './todolist.less';
@@ -41,7 +40,7 @@ export default class todoList extends Component {
                   <Dropdown overlay={menu} trigger={['click']}>
                     <a
                       className="ant-dropdown-link"
-                      onClick={e => e.preventDefault()}
+                      onClick={(e) => e.preventDefault()}
                     >
                       操作
                     </a>

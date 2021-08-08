@@ -1,3 +1,13 @@
+/*
+ * @Description:
+ * @Date: 2020-10-15 20:11:04
+ * @Author: vannvan
+ * @Email: adoerww@gmail.com
+ * @Last Modified: Do not Edit
+ * --------
+ * Copyright (c) github.com/vannvan
+ */
+
 import React, { Component } from 'react';
 import './count-view.less';
 

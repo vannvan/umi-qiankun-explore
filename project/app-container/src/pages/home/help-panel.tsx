@@ -15,13 +15,13 @@ export default class helpPanel extends React.Component {
     return (
       <div className="help-panel-wrap">
         <p className="title">
-          <span>使用帮助</span>
+          <span>使用帮助阿啊哈</span>
         </p>
         <div className="list-wrap">
           <List
             footer={<div>Footer</div>}
             dataSource={data}
-            renderItem={item => (
+            renderItem={(item) => (
               <List.Item>
                 <Typography.Text mark>[ITEM]</Typography.Text> {item}
               </List.Item>

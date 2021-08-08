@@ -1,3 +1,12 @@
+/*
+ * @Description:
+ * @Date: 2021-08-06 12:00:47
+ * @Author: vannvan
+ * @Email: adoerww@gmail.com
+ * @LastEditTime: 2021-08-08 20:34:13
+ * --------
+ * Copyright (c) github.com/vannvan
+ */
 declare module '*.css';
 declare module '*.less';
 declare module '*.png';
@@ -9,12 +18,12 @@ declare module '*.svg' {
   export default url;
 }
 
-export declare type OnGlobalStateChangeCallback = (
+declare type OnGlobalStateChangeCallback = (
   state: Record<string, any>,
   prevState: Record<string, any>,
 ) => void;
 
-export interface MicroAppStateActions {
+interface MicroAppStateActions {
   onGlobalStateChange: (
     callback: OnGlobalStateChangeCallback,
     fireImmediately?: boolean,

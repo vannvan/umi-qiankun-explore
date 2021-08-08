@@ -1,3 +1,12 @@
+/*
+ * @Descripttion:
+ * @version: 1.0
+ * @Author: Aidam_Bo
+ * @Date: 2021-08-06 15:23:08
+ * @LastEditors: Aidam_Bo
+ * @LastEditTime: 2021-08-08 19:55:16
+ */
+
 import action from '@/action'; //引入子应用中创建的action.js
 
 export const qiankun = {

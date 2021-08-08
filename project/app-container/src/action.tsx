@@ -1,9 +1,15 @@
+/*
+ * @Description:
+ * @Date: 2021-08-08 14:59:50
+ * @Author: vannvan
+ * @Email: adoerww@gmail.com
+ * @LastEditTime: 2021-08-08 20:35:12
+ * --------
+ * Copyright (c) github.com/vannvan
+ */
 //主应用的src/action.js
 import { initGlobalState } from 'qiankun';
-import { MicroAppStateActions } from 'typings';
-
 import { isValidKey } from '@/utils';
-
 export const initialState = {
   globalLocation: {
     token: '',

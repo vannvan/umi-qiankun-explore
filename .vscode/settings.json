@@ -1,0 +1,22 @@
+{
+  "cSpell.words": ["Sider", "antd", "qiankun", "unmount", "vannvan"],
+  // 文件头部注释
+  "fileheader.customMade": {
+    "Description": "",
+    "Date": "Do not edit",
+    "Author": "vannvan",
+    "Email": "adoerww@gmail.com",
+    "LastEditTime": "Do not Edit",
+    "custom_string_obkoro1": "--------\nCopyright (c) github.com/vannvan"
+  },
+
+  //函数注释
+  "fileheader.cursorMode": {
+    "name": "",
+    "param": "",
+    "return": ""
+  },
+  "fileheader.configObj": {
+    "autoAdd": true
+  }
+}

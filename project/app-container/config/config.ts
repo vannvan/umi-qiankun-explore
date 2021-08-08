@@ -32,9 +32,9 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { path: '/', component: '@/pages/login/login' },
+    { path: '/login', component: '@/pages/login/login' },
     {
-      path: '/home',
+      path: '/',
       component: '@/layouts/index',
       routes: [
         {

@@ -4,6 +4,9 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 
+//这里引入刚才创建的action.js
+import action from '@/action';
+
 const key = 'updatable';
 
 import store from '@/store/user';
@@ -29,6 +32,22 @@ const NormalLoginForm = () => {
     setTimeout(() => {
       history.push('/home');
     }, 1500);
+
+    //更新token
+    action.setGlobalState({
+      globalLocation: {
+        userInfo,
+        token: '79EC596D-736D-44F4-91A8-1C2DDADA207D',
+      },
+    });
+
+    action.onGlobalStateChange((state, prev) => {
+      console.log(state, prev);
+    });
+
+    console.log(
+      action.getGlobalState && action.getGlobalState('globalLocation'),
+    );
   };
 
   return (

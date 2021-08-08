@@ -13,6 +13,8 @@ import { deleteUserInfo } from '@/store/user/actionCreators';
 
 const MENU_LIST = require('./menu.js').default;
 
+import action from '@/action';
+
 interface IMenuType {
   name: string;
   path: string;
@@ -119,12 +121,27 @@ export default class BasicLayout extends Component<any, any> {
     );
   };
 
+  // 一个更新全局state的方法
+  handleUpdateGlobalState = () => {
+    //更新token
+    action.setGlobalState({
+      globalLocation: {
+        token: Math.random(),
+      },
+    });
+    // 监听
+    action.onGlobalStateChange((state: any, prev: any) => {
+      // state: 变更后的状态; prev 变更前的状态
+      console.log('父项目监听state变化', state.globalLocation, prev);
+    });
+  };
+
   render() {
     const { avatar } = userStore.getState() as any;
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <div className="logo">
+          <div className="logo" onClick={this.handleUpdateGlobalState}>
             <img src={require('@/assets/images/logo.png')} height={40} />
             <span>{!this.state.collapsed ? 'React.js MicroApp' : ''}</span>
           </div>

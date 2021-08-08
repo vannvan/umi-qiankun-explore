@@ -27,15 +27,14 @@ export default class BasicLayout extends Component<any, any> {
   }
 
   rootSubmenuKeys = MENU_LIST.map((el: IMenuType) => el.path);
-
   state = {
     collapsed: false,
-    openKeys: [],
+    openKeys: [''],
   };
 
   onOpenChange = (openKeys: React.Key[]) => {
     const latestOpenKey: React.Key | undefined = openKeys.find(
-      (key: React.Key) => this.state.openKeys.indexOf(String(key)) === -1,
+      (key: React.Key) => this.state.openKeys.indexOf(String(key)) > 0,
     );
     console.log('latestOpenKey', latestOpenKey);
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {

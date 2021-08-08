@@ -9,7 +9,7 @@ const PrimaryContent = {
   marginTop: '15px',
 };
 
-const spaceRight = {
+const SpaceRight = {
   marginRight: '1%',
   flex: '0 0 74%',
 };
@@ -22,7 +22,7 @@ export default () => {
         <p>轻松搭建react@umi项目模板，快速成型，提升研发效率</p>
       </div>
       <Row style={PrimaryContent}>
-        <Col span={18} style={spaceRight}>
+        <Col span={18} style={SpaceRight}>
           <CountView />
           <TodoList />
         </Col>

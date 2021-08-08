@@ -1,0 +1,36 @@
+.login-wrap {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('../../assets/images/login-bg.jpg');
+  background-size: 100% 100%;
+  // background-blend-mode: multiply;
+  //   filter: blur(10px);
+  opacity: 0.85;
+  .login-form {
+    width: 500px;
+    height: 380px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 0 0 8px rgb(#fff, 0.3);
+    padding: 50px;
+    border-radius: 8px;
+    background: rgba(#fff, 0.85);
+    h1 {
+      font-weight: bolder;
+    }
+    &:hover {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    .login-form-forgot {
+      float: right;
+    }
+    .login-form-button {
+      width: 100%;
+    }
+  }
+}

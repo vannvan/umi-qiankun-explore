@@ -3,7 +3,7 @@
  * @Date: 2021-08-08 14:59:50
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-08 20:35:12
+ * @LastEditTime: 2021-08-08 20:39:27
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -18,7 +18,7 @@ export const initialState = {
 
 const actions: MicroAppStateActions = initGlobalState(initialState);
 
-// // 定义一个获取state的方法下发到子应用
+// 定义一个获取state的方法下发到子应用
 actions.getGlobalState = (key: string) => {
   // 有key，表示取globalState下的某个子级对象
   // 无key，表示取全部

@@ -9,7 +9,8 @@ import action from '@/action';
 
 const key = 'updatable';
 
-import store from '@/store/user';
+import userStore from '@/store/user';
+import { IStateType } from '@/store/user/reducer';
 import { setUserInfo } from '@/store/user/actionCreators';
 import './login.less';
 
@@ -18,28 +19,33 @@ const avatarImageUrl = require('@/assets/images/avatar.png');
 const NormalLoginForm = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
-    const userInfo = {
-      userName: values.username,
-      avatar: avatarImageUrl,
-    };
-    const setInfoAction = setUserInfo(userInfo);
-    store.dispatch(setInfoAction);
+
     message.loading({ content: '验证身份中...', key });
 
     setTimeout(() => {
       message.success({ content: '验证通过~', key, duration: 2 });
     }, 800);
-    setTimeout(() => {
-      history.push('/home');
-    }, 1500);
+
+    const userInfo: IStateType = {
+      userName: values.username,
+      avatar: avatarImageUrl,
+    };
+
+    userInfo.token = '79EC596D-736D-44F4-91A8-1C2DDADA207D';
 
     //更新token
     action.setGlobalState({
       globalLocation: {
         userInfo,
-        token: '79EC596D-736D-44F4-91A8-1C2DDADA207D',
       },
     });
+
+    const setInfoAction = setUserInfo(userInfo);
+    userStore.dispatch(setInfoAction);
+
+    setTimeout(() => {
+      history.push('/home');
+    }, 1500);
 
     action.onGlobalStateChange((state, prev) => {
       console.log(state, prev);

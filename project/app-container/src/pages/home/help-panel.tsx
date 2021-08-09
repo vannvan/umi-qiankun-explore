@@ -15,7 +15,7 @@ export default class helpPanel extends React.Component {
     return (
       <div className="help-panel-wrap">
         <p className="title">
-          <span>使用帮助阿啊哈</span>
+          <span>使用帮助</span>
         </p>
         <div className="list-wrap">
           <List

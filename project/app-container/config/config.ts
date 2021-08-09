@@ -1,3 +1,12 @@
+/*
+ * @Description:
+ * @Date: 2021-08-06 15:56:01
+ * @Author: vannvan
+ * @Email: adoerww@gmail.com
+ * @LastEditTime: 2021-08-09 11:40:26
+ * --------
+ * Copyright (c) github.com/vannvan
+ */
 import { defineConfig } from 'umi';
 
 export default defineConfig({
@@ -36,7 +45,12 @@ export default defineConfig({
     {
       path: '/',
       component: '@/layouts/index',
+      wrappers: ['./PrivateRoute'],
       routes: [
+        {
+          path: '/',
+          redirect: '/home',
+        },
         {
           path: '/home',
           component: '@/pages/home/index',
@@ -53,6 +67,16 @@ export default defineConfig({
           name: 'app-device',
           path: '/device',
           microApp: 'app-device',
+        },
+        {
+          path: '/exception',
+          routes: [
+            {
+              path: '/exception/404',
+              component: '@/pages/exception/404',
+              meta: { title: '404' },
+            },
+          ],
         },
       ],
     },

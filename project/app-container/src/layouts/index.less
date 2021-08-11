@@ -1,36 +1,68 @@
 section {
   height: 100vh;
 }
-.logo {
-  height: 40px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-  color: #ccc;
-  display: flex;
-  align-items: center;
-  user-select: none;
-}
-
-.ant-layout-header {
-  display: flex;
-  align-items: center;
-  padding-left: 28px !important;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  .avatar-wrap {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: 50px;
-    cursor: pointer;
+.app-container-content {
+  height: 100vh;
+  overflow-y: hidden;
+  .ant-layout-sider {
+    height: calc(100vh - 64px);
+    overflow-y: auto;
   }
-}
 
-.ant-layout-content {
-  margin: 18px 16px !important;
-  padding: 18px !important;
-}
-.site-layout-background {
-  background: #fff;
+  .ant-layout-header {
+    display: flex;
+    align-items: center;
+    padding: 12px !important;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .ant-menu-item:hover {
+      background: none !important;
+    }
+    .ant-menu-item-selected {
+      background: none !important;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        left: 0;
+        bottom: -1px;
+        background: #1890ff;
+      }
+    }
+    .logo {
+      height: 64px;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      user-select: none;
+      cursor: pointer;
+      align-items: center;
+      color: #fff;
+      border-bottom: 1px solid rgba(#ccc, 0.4);
+      margin-left: -12px;
+      padding-left: 20px;
+      b {
+        font-size: 18px;
+        margin-left: 12px;
+      }
+    }
+    .avatar-wrap {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: 28px;
+      cursor: pointer;
+    }
+  }
+
+  .ant-layout-content {
+    margin: 18px 16px !important;
+    padding: 18px !important;
+  }
+  .site-layout-background {
+    background: #fff;
+  }
 }

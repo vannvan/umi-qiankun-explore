@@ -14,7 +14,7 @@ import { IStateType } from '@/store/user/reducer';
 import { setUserInfo } from '@/store/user/actionCreators';
 import './login.less';
 
-const avatarImageUrl = require('@/assets/images/avatar.png');
+const avatarImageUrl = require('@/assets/images/avatar.gif');
 
 const NormalLoginForm = () => {
   const onFinish = (values: any) => {

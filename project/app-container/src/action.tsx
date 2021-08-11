@@ -3,20 +3,22 @@
  * @Date: 2021-08-08 14:59:50
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-08 20:39:27
+ * @LastEditTime: 2021-08-10 19:55:00
  * --------
  * Copyright (c) github.com/vannvan
  */
 //主应用的src/action.js
 import { initGlobalState } from 'qiankun';
 import { isValidKey } from '@/utils';
+import { _MicroAppStateActions } from 'global';
+
 export const initialState = {
   globalLocation: {
     token: '',
   },
 };
 
-const actions: MicroAppStateActions = initGlobalState(initialState);
+const actions: _MicroAppStateActions = initGlobalState(initialState);
 
 // 定义一个获取state的方法下发到子应用
 actions.getGlobalState = (key: string) => {

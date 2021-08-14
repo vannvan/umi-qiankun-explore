@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown } from 'antd';
 import { Link, history } from 'umi';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  SlidersOutlined,
-} from '@ant-design/icons';
+import { SlidersOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -15,7 +11,7 @@ import './index.less';
 import userStore from '@/store/user';
 import { deleteUserInfo } from '@/store/user/actionCreators';
 
-const MENU_LIST = require('./menu.js').default;
+import MENU_LIST from './menu';
 
 import action from '@/action';
 
@@ -30,39 +26,16 @@ export default class BasicLayout extends Component<any, any> {
     super(props);
   }
 
-  rootSubmenuKeys = MENU_LIST.map((el: IMenuType) => el.path);
   state = {
-    collapsed: false,
-    openKeys: [''],
+    openKeys: ['2'],
     leftMenuList: [],
+    rootSubmenuKeys: ['20', '21', '22'],
   };
 
   // 菜单折叠
   onOpenChange = (openKeys: React.Key[]) => {
-    const latestOpenKey: React.Key | undefined = openKeys.find(
-      (key: React.Key) => this.state.openKeys.indexOf(String(key)) > 0,
-    );
-    console.log('latestOpenKey', latestOpenKey);
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys });
-    } else {
-      this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
-      });
-    }
+    console.log(openKeys, 'openKeys');
   };
-
-  componentDidMount() {
-    this.rootSubmenuKeys.map((el: string) => {
-      let { pathname } = this.props.location;
-      let reg = new RegExp(el);
-      if (reg.test(pathname)) {
-        this.setState({
-          openKeys: [el],
-        });
-      }
-    });
-  }
 
   componentDidUpdate() {
     let currentPathName = this.props.location.pathname;
@@ -75,17 +48,12 @@ export default class BasicLayout extends Component<any, any> {
         ? matchRouteMeta.title
         : 'React.js MicroApp';
     } catch (error) {
-      console.warn(error);
+      // console.warn(error);
       document.title = 'React.js MicroApp';
     }
   }
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-
+  // 退出操作
   handleLogout = () => {
     const logoutAction = deleteUserInfo();
     userStore.dispatch(logoutAction);
@@ -98,13 +66,13 @@ export default class BasicLayout extends Component<any, any> {
       return menuData.map((item: any) => {
         if (item.children && item.children.length > 0) {
           return (
-            <SubMenu key={item.id} title={item.name} icon={item.icon}>
+            <SubMenu key={String(item.id)} title={item.name} icon={item.icon}>
               {deep(item.children)}
             </SubMenu>
           );
         }
         return (
-          <Menu.Item key={item.id} icon={item.icon}>
+          <Menu.Item key={String(item.id)} icon={item.icon}>
             <Link to={item.path} replace>
               {item.name}
             </Link>
@@ -123,7 +91,7 @@ export default class BasicLayout extends Component<any, any> {
           return (
             <Menu.Item
               key={el.id}
-              icon={<SlidersOutlined />}
+              icon={el.icon}
               onClick={() => this.handleChangeMicroApp(el)}
             >
               {el.name}
@@ -137,13 +105,12 @@ export default class BasicLayout extends Component<any, any> {
   // 左侧菜单
   visibleLeftMenu = () => {
     return this.state.leftMenuList.length ? (
-      <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+      <Sider trigger={null} collapsible>
         <Menu
           theme="dark"
           mode="inline"
-          openKeys={this.state.openKeys}
+          defaultSelectedKeys={['20']}
           onOpenChange={this.onOpenChange}
-          selectedKeys={this.props.location.pathname}
         >
           {this.menuTag(this.state.leftMenuList)}
         </Menu>
@@ -157,9 +124,11 @@ export default class BasicLayout extends Component<any, any> {
   handleChangeMicroApp = (appItem: IMenuType) => {
     this.setState({ leftMenuList: appItem.children });
     const microFirstMenu = appItem.children[0];
+    this.setState({
+      rootSubmenuKeys: appItem.children.map((el: any) => String(el.id)),
+    });
     history.push(microFirstMenu.path);
-
-    // this.onOpenChange(microFirstMenu.id);
+    this.setState({ openKeys: [microFirstMenu.id] });
   };
 
   // 用户信息及操作
@@ -210,14 +179,7 @@ export default class BasicLayout extends Component<any, any> {
         <Layout>
           {this.visibleLeftMenu()}
           <Layout>
-            <Content
-              className="site-layout-background"
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-              }}
-            >
+            <Content className="site-layout-background">
               {this.props.children}
             </Content>
           </Layout>

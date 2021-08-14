@@ -6,6 +6,7 @@ import { history } from 'umi';
 
 //这里引入刚才创建的action.js
 import action from '@/action';
+import { guid } from '@/utils';
 
 const key = 'updatable';
 
@@ -31,7 +32,7 @@ const NormalLoginForm = () => {
       avatar: avatarImageUrl,
     };
 
-    userInfo.token = '79EC596D-736D-44F4-91A8-1C2DDADA207D';
+    userInfo.token = guid();
 
     //更新token
     action.setGlobalState({

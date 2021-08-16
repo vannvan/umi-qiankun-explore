@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, Key } from 'react';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown } from 'antd';
 import { Link, history } from 'umi';
 import { SlidersOutlined } from '@ant-design/icons';
+import storage from '@/utils/storage';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -12,7 +13,6 @@ import userStore from '@/store/user';
 import { deleteUserInfo } from '@/store/user/actionCreators';
 
 import MENU_LIST from './menu';
-
 import action from '@/action';
 
 interface IMenuType {
@@ -21,58 +21,55 @@ interface IMenuType {
   [propName: string]: any;
 }
 
-export default class BasicLayout extends Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
+export default function BasicLayout(props: any) {
+  const [openKeys, setOpenKeys] = useState<Key[]>([]);
 
-  state = {
-    openKeys: ['2'],
-    leftMenuList: [],
-    rootSubmenuKeys: ['20', '21', '22'],
-  };
+  const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
+
+  const [leftMenuList, setLeftMenuList] = useState<Array<IMenuType>>([]);
+
+  useEffect(() => {
+    const storageMenu = storage.session.get('leftMenuList') as any;
+
+    if (storageMenu && storageMenu.length) {
+      setLeftMenuList(storageMenu);
+    }
+
+    setOpenKeys(storage.session.get('openKeys') as any);
+    setSelectedKeys(storage.session.get('selectedKeys') as any);
+  }, []);
 
   // 菜单折叠
-  onOpenChange = (openKeys: React.Key[]) => {
-    console.log(openKeys, 'openKeys');
+  const onOpenChange = (openKeys: Key[]) => {
+    setOpenKeys(openKeys);
+    storage.session.set('openKeys', openKeys);
   };
 
-  componentDidUpdate() {
-    let currentPathName = this.props.location.pathname;
-    let routeList = this.props.route.routes;
-    try {
-      let matchRouteMeta = routeList.find((el: any) => {
-        return el.path == currentPathName;
-      }).meta;
-      document.title = matchRouteMeta
-        ? matchRouteMeta.title
-        : 'React.js MicroApp';
-    } catch (error) {
-      // console.warn(error);
-      document.title = 'React.js MicroApp';
-    }
-  }
+  const handleSelectChange = ({ item, selectedKeys }: any) => {
+    setSelectedKeys(selectedKeys);
+    storage.session.set('selectedKeys', selectedKeys);
+  };
 
   // 退出操作
-  handleLogout = () => {
+  const handleLogout = () => {
     const logoutAction = deleteUserInfo();
     userStore.dispatch(logoutAction);
     history.push('/login');
   };
 
   // 菜单节点
-  menuTag = function deep(menuData: Array<object>) {
+  const menuTag = function deep(menuData: Array<object>) {
     if (menuData && menuData.length > 0) {
       return menuData.map((item: any) => {
         if (item.children && item.children.length > 0) {
           return (
-            <SubMenu key={String(item.id)} title={item.name} icon={item.icon}>
+            <SubMenu key={String(item.id)} title={item.name}>
               {deep(item.children)}
             </SubMenu>
           );
         }
         return (
-          <Menu.Item key={String(item.id)} icon={item.icon}>
+          <Menu.Item key={String(item.id)}>
             <Link to={item.path} replace>
               {item.name}
             </Link>
@@ -83,7 +80,7 @@ export default class BasicLayout extends Component<any, any> {
   };
 
   // 头部导航
-  headerNav = (headerNav: Array<object>) => {
+  const headerNav = (headerNav: Array<object>) => {
     if (headerNav && headerNav.length > 0) {
       return headerNav.map((el: any) => {
         // 过滤掉home
@@ -92,7 +89,7 @@ export default class BasicLayout extends Component<any, any> {
             <Menu.Item
               key={el.id}
               icon={el.icon}
-              onClick={() => this.handleChangeMicroApp(el)}
+              onClick={() => handleChangeMicroApp(el)}
             >
               {el.name}
             </Menu.Item>
@@ -103,16 +100,18 @@ export default class BasicLayout extends Component<any, any> {
   };
 
   // 左侧菜单
-  visibleLeftMenu = () => {
-    return this.state.leftMenuList.length ? (
+  const visibleLeftMenu = () => {
+    return leftMenuList.length ? (
       <Sider trigger={null} collapsible>
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['20']}
-          onOpenChange={this.onOpenChange}
+          defaultSelectedKeys={selectedKeys as string[]}
+          openKeys={openKeys as string[]}
+          onOpenChange={onOpenChange}
+          onSelect={handleSelectChange}
         >
-          {this.menuTag(this.state.leftMenuList)}
+          {menuTag(leftMenuList)}
         </Menu>
       </Sider>
     ) : (
@@ -121,23 +120,23 @@ export default class BasicLayout extends Component<any, any> {
   };
 
   // 切换微应用，并把页面切换至微应用第一个菜单
-  handleChangeMicroApp = (appItem: IMenuType) => {
-    this.setState({ leftMenuList: appItem.children });
+  const handleChangeMicroApp = (appItem: IMenuType) => {
     const microFirstMenu = appItem.children[0];
-    this.setState({
-      rootSubmenuKeys: appItem.children.map((el: any) => String(el.id)),
-    });
+    setLeftMenuList(appItem.children);
+    setSelectedKeys(microFirstMenu.id);
     history.push(microFirstMenu.path);
-    this.setState({ openKeys: [microFirstMenu.id] });
+    storage.session.set('leftMenuList', appItem.children);
   };
 
   // 用户信息及操作
-  userOperation = () => {
+  const userOperation = () => {
     const { userName } = userStore.getState() as any;
     return (
       <Menu style={{ width: 112 }}>
-        <Menu.Item key="1">{userName}</Menu.Item>
-        <Menu.Item key="2" onClick={this.handleLogout}>
+        <Menu.Item key="1" onClick={() => history.push('/common/user')}>
+          {userName}
+        </Menu.Item>
+        <Menu.Item key="2" onClick={handleLogout}>
           退出
         </Menu.Item>
       </Menu>
@@ -145,7 +144,7 @@ export default class BasicLayout extends Component<any, any> {
   };
 
   // 一个更新全局state的方法
-  handleUpdateGlobalState = () => {
+  const handleUpdateGlobalState = () => {
     //更新token
     action.setGlobalState({
       globalLocation: {
@@ -159,32 +158,28 @@ export default class BasicLayout extends Component<any, any> {
     });
   };
 
-  render() {
-    const { avatar } = userStore.getState() as any;
-    return (
-      <Layout className="app-container-content">
-        <Header className="header">
-          <div className="logo" onClick={() => history.push('/home')}>
-            <img src={require('@/assets/images/logo-ww.png')} height={40} />
-          </div>
-          <Menu mode="horizontal" theme="dark">
-            {this.headerNav(MENU_LIST)}
-          </Menu>
-          <Dropdown overlay={this.userOperation} trigger={['click']}>
-            <span className="avatar-wrap">
-              <Avatar src={avatar} />
-            </span>
-          </Dropdown>
-        </Header>
+  const { avatar } = userStore.getState() as any;
+  return (
+    <Layout className="app-container-content">
+      <Header className="header">
+        <div className="logo" onClick={() => history.push('/home')}>
+          <img src={require('@/assets/images/logo-ww.png')} height={40} />
+        </div>
+        <Menu mode="horizontal" theme="dark">
+          {headerNav(MENU_LIST)}
+        </Menu>
+        <Dropdown overlay={userOperation} trigger={['click']}>
+          <span className="avatar-wrap">
+            <Avatar src={avatar} />
+          </span>
+        </Dropdown>
+      </Header>
+      <Layout>
+        {visibleLeftMenu()}
         <Layout>
-          {this.visibleLeftMenu()}
-          <Layout>
-            <Content className="site-layout-background">
-              {this.props.children}
-            </Content>
-          </Layout>
+          <Content className="site-layout-background">{props.children}</Content>
         </Layout>
       </Layout>
-    );
-  }
+    </Layout>
+  );
 }

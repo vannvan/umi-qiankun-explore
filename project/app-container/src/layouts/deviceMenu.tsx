@@ -3,7 +3,7 @@
  * @Date: 2021-08-11 16:23:58
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-12 14:53:03
+ * @LastEditTime: 2021-08-14 18:06:17
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -13,18 +13,18 @@ export default [
   {
     name: '设备总览',
     id: '20',
-    path: '/device',
+    path: '/device/overview',
     icon: <SlidersOutlined />,
   },
   {
     name: '摄像头 ',
     id: '21',
-    path: '/camera',
+    path: '/device',
     icon: <InteractionOutlined />,
     children: [
       {
         name: '设备管理',
-        path: '/camera/list',
+        path: '/device/camara',
         id: '211',
       },
     ],
@@ -32,12 +32,12 @@ export default [
   {
     name: '云盒',
     id: '22',
-    path: '/cloudBox',
+    path: '/device',
     icon: <InteractionOutlined />,
     children: [
       {
         name: '云盒列表',
-        path: '/cloudBox/list',
+        path: '/device/cloudBox',
         id: '221',
       },
     ],

@@ -22,10 +22,16 @@ interface IMenuType {
 }
 
 export default function BasicLayout(props: any) {
+  //头部选中
+  const [headerSelectedKeys, setHeaderSelectedKeys] = useState<Key[]>([]);
+
+  //左侧菜单展开项
   const [openKeys, setOpenKeys] = useState<Key[]>([]);
 
+  //左侧菜单选中项
   const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
 
+  //左侧菜单列表
   const [leftMenuList, setLeftMenuList] = useState<Array<IMenuType>>([]);
 
   useEffect(() => {
@@ -39,12 +45,17 @@ export default function BasicLayout(props: any) {
     setSelectedKeys(storage.session.get('selectedKeys') as any);
   }, []);
 
-  // 菜单折叠
+  useEffect(() => {
+    console.log('headerSelectedKeys', headerSelectedKeys);
+  }, [headerSelectedKeys]);
+
+  // 左侧菜单折叠
   const onOpenChange = (openKeys: Key[]) => {
     setOpenKeys(openKeys);
     storage.session.set('openKeys', openKeys);
   };
 
+  // 左侧菜单选中
   const handleSelectChange = ({ item, selectedKeys }: any) => {
     setSelectedKeys(selectedKeys);
     storage.session.set('selectedKeys', selectedKeys);
@@ -86,11 +97,7 @@ export default function BasicLayout(props: any) {
         // 过滤掉home
         if (el.name != 'home') {
           return (
-            <Menu.Item
-              key={el.id}
-              icon={el.icon}
-              onClick={() => handleChangeMicroApp(el)}
-            >
+            <Menu.Item key={el.id} icon={el.icon}>
               {el.name}
             </Menu.Item>
           );
@@ -120,12 +127,21 @@ export default function BasicLayout(props: any) {
   };
 
   // 切换微应用，并把页面切换至微应用第一个菜单
-  const handleChangeMicroApp = (appItem: IMenuType) => {
-    const microFirstMenu = appItem.children[0];
-    setLeftMenuList(appItem.children);
-    setSelectedKeys(microFirstMenu.id);
+  const handleChangeMicroApp = ({ key }: any) => {
+    // 更新头部选中项
+    setHeaderSelectedKeys(key);
+
+    // 找到当前目标应用菜单项，更新左侧菜单
+    let microApp = MENU_LIST.find((item) => item.id == key) as IMenuType;
+    setLeftMenuList(microApp?.children);
+
+    // 找到当前目标应用第一项菜单
+    const microFirstMenu = microApp ? microApp.children[0] : {};
     history.push(microFirstMenu.path);
-    storage.session.set('leftMenuList', appItem.children);
+    // 选中第一项菜单
+    setSelectedKeys(microFirstMenu?.id);
+    setOpenKeys([]);
+    storage.session.set('leftMenuList', microApp.children);
   };
 
   // 用户信息及操作
@@ -141,6 +157,13 @@ export default function BasicLayout(props: any) {
         </Menu.Item>
       </Menu>
     );
+  };
+
+  // 回到首页
+  const handleGoHome = () => {
+    history.push('/home');
+    setLeftMenuList([]);
+    setHeaderSelectedKeys(['']);
   };
 
   // 一个更新全局state的方法
@@ -162,10 +185,15 @@ export default function BasicLayout(props: any) {
   return (
     <Layout className="app-container-content">
       <Header className="header">
-        <div className="logo" onClick={() => history.push('/home')}>
+        <div className="logo" onClick={handleGoHome}>
           <img src={require('@/assets/images/logo-ww.png')} height={40} />
         </div>
-        <Menu mode="horizontal" theme="dark">
+        <Menu
+          mode="horizontal"
+          theme="dark"
+          onSelect={handleChangeMicroApp}
+          selectedKeys={headerSelectedKeys as string[]}
+        >
           {headerNav(MENU_LIST)}
         </Menu>
         <Dropdown overlay={userOperation} trigger={['click']}>

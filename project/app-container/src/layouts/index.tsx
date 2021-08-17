@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Key } from 'react';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown } from 'antd';
 import { Link, history } from 'umi';
-import { SlidersOutlined } from '@ant-design/icons';
 import storage from '@/utils/storage';
 
 const { SubMenu } = Menu;
@@ -45,10 +44,6 @@ export default function BasicLayout(props: any) {
     setSelectedKeys(storage.session.get('selectedKeys') as any);
   }, []);
 
-  useEffect(() => {
-    console.log('headerSelectedKeys', headerSelectedKeys);
-  }, [headerSelectedKeys]);
-
   // 左侧菜单折叠
   const onOpenChange = (openKeys: Key[]) => {
     setOpenKeys(openKeys);
@@ -66,6 +61,7 @@ export default function BasicLayout(props: any) {
     const logoutAction = deleteUserInfo();
     userStore.dispatch(logoutAction);
     history.push('/login');
+    sessionStorage.clear();
   };
 
   // 菜单节点

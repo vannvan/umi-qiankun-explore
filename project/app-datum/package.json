@@ -1,9 +1,9 @@
 {
-  "name": "app-container",
+  "name": "app-datum",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "PORT=8000 umi dev",
+    "start": "PORT=8004 umi dev",
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -23,18 +23,15 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
-    "@umijs/plugin-qiankun": "^2.27.0",
-    "npm-run-all": "^4.1.5",
     "react": "17.x",
     "react-dom": "17.x",
-    "redux-thunk": "^2.3.0",
-    "umi": "^3.5.15"
+    "umi": "^3.5.17"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@umijs/preset-react": "1.x",
-    "@umijs/test": "^3.5.15",
+    "@umijs/test": "^3.5.17",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "typescript": "^4.1.2",

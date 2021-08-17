@@ -1,5 +1,6 @@
 {
   "name": "app-common",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "PORT=8002 umi dev",

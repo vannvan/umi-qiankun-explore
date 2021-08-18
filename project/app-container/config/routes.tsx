@@ -3,7 +3,7 @@
  * @Date: 2021-08-09 15:50:34
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-09 15:51:08
+ * @LastEditTime: 2021-08-17 17:29:28
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -22,12 +22,33 @@ export default [
     name: 'app-common',
     path: '/common',
     microApp: 'app-common',
+    microAppProps: {
+      autoSetLoading: true,
+      className: 'micro-app-wrapper',
+      wrapperClassName: 'micro-wrapper-loadding',
+    },
   },
   // 设备服务模块
   {
     name: 'app-device',
     path: '/device',
     microApp: 'app-device',
+    microAppProps: {
+      autoSetLoading: true,
+      className: 'micro-app-wrapper',
+      wrapperClassName: 'micro-wrapper-loadding',
+    },
+  },
+  // 监控模块
+  {
+    name: 'app-monitor',
+    path: '/monitor',
+    microApp: 'app-monitor',
+    microAppProps: {
+      autoSetLoading: true,
+      className: 'micro-app-wrapper',
+      wrapperClassName: 'micro-wrapper-loadding',
+    },
   },
   {
     path: '/exception',

@@ -3,7 +3,7 @@
  * @Date: 2020-10-22 21:28:00
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-12 14:15:43
+ * @LastEditTime: 2021-08-17 17:30:12
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -24,6 +24,7 @@ export default [
     name: '设备管理',
     path: '/device',
     id: '2',
+    appName: 'app-device',
     icon: <SlidersOutlined />,
     children: deviceMenuList,
   },
@@ -31,6 +32,7 @@ export default [
     name: '数据中心',
     path: '/datum',
     id: '3',
+    appName: 'app-datum',
     icon: <BarChartOutlined />,
     children: [],
   },
@@ -38,6 +40,7 @@ export default [
     name: '智能监控',
     path: '/monitor',
     id: '4',
+    appName: 'app-monitor',
     icon: <AreaChartOutlined />,
     children: [],
   },
@@ -45,6 +48,7 @@ export default [
     name: '系统设置',
     path: '/common',
     id: '5',
+    appName: 'app-common',
     icon: <SettingOutlined />,
     children: commonMenu,
   },

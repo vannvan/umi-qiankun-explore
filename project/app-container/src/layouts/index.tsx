@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Key } from 'react';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown } from 'antd';
-import { Link, history } from 'umi';
+import { Link, history, MicroApp } from 'umi';
 import storage from '@/utils/storage';
 
 const { SubMenu } = Menu;
@@ -33,6 +33,9 @@ export default function BasicLayout(props: any) {
   //左侧菜单列表
   const [leftMenuList, setLeftMenuList] = useState<Array<IMenuType>>([]);
 
+  //当前微应用
+  const [currentMicroApp, setCurrentMicroApp] = useState<string>('');
+
   useEffect(() => {
     const storageMenu = storage.session.get('leftMenuList') as any;
 
@@ -56,15 +59,7 @@ export default function BasicLayout(props: any) {
     storage.session.set('selectedKeys', selectedKeys);
   };
 
-  // 退出操作
-  const handleLogout = () => {
-    const logoutAction = deleteUserInfo();
-    userStore.dispatch(logoutAction);
-    history.push('/login');
-    sessionStorage.clear();
-  };
-
-  // 菜单节点
+  // 左侧菜单节点
   const menuTag = function deep(menuData: Array<object>) {
     if (menuData && menuData.length > 0) {
       return menuData.map((item: any) => {
@@ -82,22 +77,6 @@ export default function BasicLayout(props: any) {
             </Link>
           </Menu.Item>
         );
-      });
-    }
-  };
-
-  // 头部导航
-  const headerNav = (headerNav: Array<object>) => {
-    if (headerNav && headerNav.length > 0) {
-      return headerNav.map((el: any) => {
-        // 过滤掉home
-        if (el.name != 'home') {
-          return (
-            <Menu.Item key={el.id} icon={el.icon}>
-              {el.name}
-            </Menu.Item>
-          );
-        }
       });
     }
   };
@@ -122,6 +101,22 @@ export default function BasicLayout(props: any) {
     );
   };
 
+  // 头部导航
+  const headerNav = (headerNav: Array<object>) => {
+    if (headerNav && headerNav.length > 0) {
+      return headerNav.map((el: any) => {
+        // 过滤掉home
+        if (el.name != 'home') {
+          return (
+            <Menu.Item key={el.id} icon={el.icon}>
+              {el.name}
+            </Menu.Item>
+          );
+        }
+      });
+    }
+  };
+
   // 切换微应用，并把页面切换至微应用第一个菜单
   const handleChangeMicroApp = ({ key }: any) => {
     // 更新头部选中项
@@ -131,12 +126,17 @@ export default function BasicLayout(props: any) {
     let microApp = MENU_LIST.find((item) => item.id == key) as IMenuType;
     setLeftMenuList(microApp?.children);
 
+    // 更新当前微应用
+    setCurrentMicroApp(microApp.appName);
+
     // 找到当前目标应用第一项菜单
     const microFirstMenu = microApp ? microApp.children[0] : {};
     history.push(microFirstMenu.path);
+
     // 选中第一项菜单
     setSelectedKeys(microFirstMenu?.id);
     setOpenKeys([]);
+
     storage.session.set('leftMenuList', microApp.children);
   };
 
@@ -155,11 +155,38 @@ export default function BasicLayout(props: any) {
     );
   };
 
+  // 退出操作
+  const handleLogout = () => {
+    const logoutAction = deleteUserInfo();
+    userStore.dispatch(logoutAction);
+    history.push('/login');
+    sessionStorage.clear();
+  };
+
   // 回到首页
   const handleGoHome = () => {
     history.push('/home');
+    //清除左侧菜单
     setLeftMenuList([]);
     setHeaderSelectedKeys(['']);
+    // 清除微应用
+    setCurrentMicroApp('');
+  };
+
+  // 加载微应用
+  const shouldLoadMicroApp = () => {
+    return currentMicroApp ? (
+      <MicroApp
+        name={currentMicroApp}
+        autoSetLoading={true}
+        // 微应用容器 class
+        className="micro-app-wrapper"
+        // wrapper class，仅开启 loading 动画时生效
+        wrapperClassName="micro-wrapper-loadding"
+      />
+    ) : (
+      ''
+    );
   };
 
   // 一个更新全局state的方法
@@ -201,7 +228,10 @@ export default function BasicLayout(props: any) {
       <Layout>
         {visibleLeftMenu()}
         <Layout>
-          <Content className="site-layout-background">{props.children}</Content>
+          <Content className="site-layout-background">
+            {props.children}
+            {shouldLoadMicroApp()}
+          </Content>
         </Layout>
       </Layout>
     </Layout>

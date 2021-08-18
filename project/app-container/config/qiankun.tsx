@@ -3,7 +3,7 @@
  * @Date: 2021-08-09 15:52:02
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-09 15:53:28
+ * @LastEditTime: 2021-08-17 17:29:00
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -26,6 +26,10 @@ export default {
         props: {
           token: 'XXXXXXX',
         },
+      },
+      {
+        name: 'app-monitor',
+        entry: '//localhost:8005', // 数据中心，
       },
     ],
     jsSandbox: true, // 是否启用 js 沙箱，默认为 false

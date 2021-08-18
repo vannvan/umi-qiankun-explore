@@ -3,7 +3,7 @@
  * @Date: 2021-08-09 09:15:29
  * @Author: vannvan
  * @Email: adoerww@gmail.com
- * @LastEditTime: 2021-08-09 11:54:08
+ * @LastEditTime: 2021-08-17 16:06:01
  * --------
  * Copyright (c) github.com/vannvan
  */
@@ -26,8 +26,7 @@ const routeIsValid = (location: routeType) => {
 export default function (props: any) {
   let hasKey = routeIsValid(props.location);
   if (!hasKey) {
-    // return <Redirect to="/exception/404" />;
-    console.log(props, 'aaa');
+    return <Redirect to="/exception/404" />;
   }
   const isLogin = userStore.getState();
   if (!isLogin) {

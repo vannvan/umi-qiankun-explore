@@ -29,7 +29,7 @@ export default [
     children: deviceMenuList,
   },
   {
-    name: '数据中心',
+    name: '数据中心(无子服务)',
     path: '/datum',
     id: '3',
     appName: 'app-datum',
@@ -37,7 +37,7 @@ export default [
     children: [],
   },
   {
-    name: '智能监控',
+    name: '智能监控(无子服务)',
     path: '/monitor',
     id: '4',
     appName: 'app-monitor',

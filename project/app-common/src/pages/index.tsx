@@ -39,6 +39,8 @@ export default function IndexPage(props: any) {
       >
         用户信息
       </Button>
+
+      <h2>【系统管理】菜单用于参考子应用路由配置方式</h2>
     </div>
   );
 }

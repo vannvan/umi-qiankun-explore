@@ -13,7 +13,7 @@ export default {
     apps: [
       {
         name: 'app-common', // 公共服务
-        entry: '//localhost:8002',
+        entry: '//localhost:6002',
         // 子应用通过钩子函数的参数props可以拿到这里传入的值
         props: {
           token: 'XXXXXXX',
@@ -21,7 +21,7 @@ export default {
       },
       {
         name: 'app-device', // 设备服务
-        entry: '//localhost:8001',
+        entry: '//localhost:6004',
         // 子应用通过钩子函数的参数props可以拿到这里传入的值
         props: {
           token: 'XXXXXXX',

@@ -6,7 +6,7 @@
 [![node](https://img.shields.io/badge/node-14.3.1-brightgreen)]()
 [![npm](https://img.shields.io/badge/npm-6.14.8-brightgreen)]()
 
-> 该技术方案主要针对 React.js 技术栈大型项目需要拆分为微服务的开发及管理的场景，目前仍在完善阶段
+> 该技术方案主要针对 React.js 技术栈大型项目需要拆分为微服务的应用场景，融合了微服务常用配置及方法的应用，可作为实践项目的参考。
 
 ## 使用
 
@@ -29,7 +29,7 @@ export default {
     apps: [
       {
         name: 'app-common', // 公共服务
-        entry: '//localhost:8002',
+        entry: '//localhost:8002', // 实际端口号可能不是这个
         // 子应用通过钩子函数的参数props可以拿到这里传入的值
         props: {
           token: 'XXXXXXX',
@@ -37,7 +37,7 @@ export default {
       },
       {
         name: 'app-device', // 设备服务
-        entry: '//localhost:8001',
+        entry: '//localhost:8001',// 实际端口号可能不是这个
         // 子应用通过钩子函数的参数props可以拿到这里传入的值
         props: {
           token: 'XXXXXXX',

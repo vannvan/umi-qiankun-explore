@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
@@ -13,9 +14,17 @@
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"]
     },
-    "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true
   },
+  "include": [
+    "mocks/**/*",
+    "src/**/*",
+    "config/**/*",
+    ".umirc.ts",
+    "typings.d.ts",
+    "types/ht.d.ts",
+    "types/ht-widget.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "lib",

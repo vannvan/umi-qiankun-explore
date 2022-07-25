@@ -131,7 +131,7 @@ export default function BasicLayout(props: any) {
 
     // 找到当前目标应用第一项菜单
     const microFirstMenu = microApp ? microApp.children[0] : {};
-    history.push(microFirstMenu.path);
+    microFirstMenu && history.push(microFirstMenu.path);
 
     // 选中第一项菜单
     setSelectedKeys(microFirstMenu?.id);
@@ -178,7 +178,7 @@ export default function BasicLayout(props: any) {
     return currentMicroApp ? (
       <MicroApp
         name={currentMicroApp}
-        autoSetLoading={true}
+        // autoSetLoading={true}
         // 微应用容器 class
         className="micro-app-wrapper"
         // wrapper class，仅开启 loading 动画时生效
@@ -214,6 +214,7 @@ export default function BasicLayout(props: any) {
         <Menu
           mode="horizontal"
           theme="dark"
+          style={{ width: '80%' }}
           onSelect={handleChangeMicroApp}
           selectedKeys={headerSelectedKeys as string[]}
         >

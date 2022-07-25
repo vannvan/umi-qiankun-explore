@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "clone:all": "bash ./scripts/clone-all.sh",
-    "boots": "rm -rf ./node_modules && lerna bootstrap",
-    "start": "lerna run --parallel start "
+    "boots": "rm -rf ./node_modules && npx lerna bootstrap",
+    "start": "npx lerna run --parallel start "
   },
   "command": {
     "run": {
@@ -17,6 +17,7 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/plugin-qiankun": "^2.27.0",
+    "lerna": "^5.2.0",
     "react": "17.x",
     "react-dom": "17.x",
     "redux-thunk": "^2.3.0",

@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "importHelpers": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
@@ -17,11 +17,13 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "mock/**/*",
+    "mocks/**/*",
     "src/**/*",
     "config/**/*",
     ".umirc.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    "types/ht.d.ts",
+    "types/ht-widget.d.ts"
   ],
   "exclude": [
     "node_modules",

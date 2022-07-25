@@ -51,6 +51,16 @@ export default [
     },
   },
   {
+    name: 'app-datum',
+    path: '/datum',
+    microApp: 'app-datum',
+    microAppProps: {
+      autoSetLoading: false,
+      className: 'micro-app-wrapper',
+      wrapperClassName: 'micro-wrapper-loadding',
+    },
+  },
+  {
     path: '/exception',
     routes: [
       {

@@ -16,7 +16,7 @@ const menu = (
 
 const todoListData = [
   { name: '吃饭饭', time: '2020-10-15 15:22:23', status: 1 },
-  { name: '吃觉觉', time: '2020-10-15 15:22:23', status: 1 },
+  { name: '睡觉觉', time: '2020-10-15 15:22:23', status: 1 },
   { name: '打豆豆', time: '2020-10-15 15:22:23', status: 1 },
 ];
 

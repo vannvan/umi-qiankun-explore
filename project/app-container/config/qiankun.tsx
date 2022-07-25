@@ -27,9 +27,13 @@ export default {
           token: 'XXXXXXX',
         },
       },
+      // {
+      //   name: 'app-monitor',
+      //   entry: '//localhost:8005', // 监控中心，
+      // },
       {
-        name: 'app-monitor',
-        entry: '//localhost:8005', // 数据中心，
+        name: 'app-datum',
+        entry: '//localhost:6008', // 数据中心，
       },
     ],
     jsSandbox: true, // 是否启用 js 沙箱，默认为 false

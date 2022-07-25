@@ -17,6 +17,7 @@ import {
 
 import deviceMenuList from './deviceMenu';
 import commonMenu from './commonMenu';
+import datumMenu from './datumMenu';
 import React from 'react';
 export default [
   { name: 'home', path: '/home', id: '1', icon: <HomeOutlined /> },
@@ -29,12 +30,12 @@ export default [
     children: deviceMenuList,
   },
   {
-    name: '数据中心(无子服务)',
+    name: '数据中心(Vue.js)',
     path: '/datum',
     id: '3',
     appName: 'app-datum',
     icon: <BarChartOutlined />,
-    children: [],
+    children: datumMenu,
   },
   {
     name: '智能监控(无子服务)',

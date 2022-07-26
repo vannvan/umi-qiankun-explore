@@ -1,3 +1,4 @@
+
 # lerna+umi+antd+qiankun 微服务方案
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
@@ -87,8 +88,6 @@ export const qiankun = {
   },
 }
 ```
-
-
 
 
 ### Vue.js

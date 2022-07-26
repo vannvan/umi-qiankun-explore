@@ -13,6 +13,7 @@ export default {
   },
   mounted() {
     console.log('app other is mounted')
+    console.log('window', window)
   },
 }
 </script>

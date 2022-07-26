@@ -9,9 +9,6 @@ let instance = null
 
 function render(props = {}) {
   const { container } = props
-
-  console.log('container', container)
-
   instance = new Vue({
     router,
     render: (h) => h(App),

@@ -246,7 +246,7 @@ export default function BasicLayout(props: any) {
                 {props.children}
               </>
             )}
-            <div id="ManualNode" style={{ height: 500 }}></div>
+            <div id="ManualNode"></div>
           </Content>
         </Layout>
       </Layout>

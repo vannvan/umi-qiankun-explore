@@ -50,7 +50,9 @@ export default {
 }
 ```
 
-## 子项目配置
+## 子项目配置(主要环节)
+
+### React.js
 
 app-common/config/config.ts
 
@@ -85,6 +87,133 @@ export const qiankun = {
   },
 }
 ```
+
+
+
+
+### Vue.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router/index'
+import store from './store/index'
+
+Vue.config.productionTip = false
+
+let instance = null
+
+function render(props = {}) {
+  const { container } = props
+  instance = new Vue({
+    router,
+    render: (h) => h(App),
+  }).$mount('#app')
+}
+
+if (window.__POWERED_BY_QIANKUN__) {
+  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
+}
+
+if (!window.__POWERED_BY_QIANKUN__) {
+  render()
+}
+
+export async function bootstrap() {
+  console.log('[vue] vue app bootstraped')
+}
+
+export async function mount(props) {
+  console.log('[vue] props from main framework', props)
+  render(props)
+}
+
+export async function unmount() {
+  instance.$destroy()
+  instance.$el.innerHTML = ''
+  instance = null
+}
+
+```
+
+## 应用加载方式
+- 手动模式 通过将微应用关联到一些 url 规则的方式，实现当浏览器 url 发生变化时，自动加载相应的微应用的功  能。
+- 自动模式 如果微应用不是直接跟路由关联的时候，可以选择手动加载微应用的方式会更加灵活。
+### 自动模式
+
+step1 应用配置
+```js
+// 注册子应用信息
+  master: {
+    apps: [
+      {
+        name: 'app-common', // 公共服务
+        entry: '//localhost:6002',
+        // 子应用通过钩子函数的参数props可以拿到这里传入的值
+        props: {
+          token: 'XXXXXXX',
+        },
+      },
+      {
+        name: 'app-datum', 
+        entry: '//localhost:6008', // 数据中心，
+      },
+    ],
+  }
+
+```
+step2 路由
+
+```js
+{
+    name: 'app-datum',
+    path: '/datum',
+    microApp: 'app-datum',
+    microAppProps: {
+      autoSetLoading: false,
+      className: 'micro-app-wrapper',
+      wrapperClassName: 'micro-wrapper-loadding',
+    },
+  }
+```
+
+step3 加载应用
+
+```js
+ <MicroApp
+    name={currentMicroApp} // 应用名称，与上面配置的保持一致
+    // autoSetLoading={true}
+    // 微应用容器 class
+    className="micro-app-wrapper"
+    // wrapper class，仅开启 loading 动画时生效
+    wrapperClassName="micro-wrapper-loadding"
+  />
+```
+
+### 手动模式
+
+step1  确保有一个挂载子应用的节点
+```js
+<div id="ManualNode"></div>
+```
+
+step2 使用loadMicroApp加载子应用
+```js
+
+const subApp = loadMicroApp({
+  name: 'app1',
+  entry: '//localhost:1234',
+  container: "#ManualNode",
+  props: { xxxxx: '/' }, // 下发给子应用的数据
+});
+```
+
+
+ 当需要更新时
+```js
+subApp.update({ name: 'xxxx' });
+```
+
 
 ## 注意
 

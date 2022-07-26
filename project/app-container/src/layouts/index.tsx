@@ -1,28 +1,32 @@
-import React, { useState, useEffect, Key } from 'react';
+import React, { useState, useEffect, Key, useRef } from 'react';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown } from 'antd';
 import { Link, history, MicroApp } from 'umi';
 import storage from '@/utils/storage';
+import { loadMicroApp } from 'qiankun';
+import { deleteUserInfo } from '@/store/user/actionCreators';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-import './index.less';
-
 import userStore from '@/store/user';
-import { deleteUserInfo } from '@/store/user/actionCreators';
 
 import MENU_LIST from './menu';
 import action from '@/action';
+import './index.less';
 
 interface IMenuType {
   name: string;
   path: string;
+  appName: string;
+  entry: string;
+  id: string;
+  manual: boolean;
   [propName: string]: any;
 }
 
 export default function BasicLayout(props: any) {
   //头部选中
-  const [headerSelectedKeys, setHeaderSelectedKeys] = useState<Key[]>([]);
+  const [headerSelected, setHeaderSelected] = useState<IMenuType>();
 
   //左侧菜单展开项
   const [openKeys, setOpenKeys] = useState<Key[]>([]);
@@ -35,6 +39,8 @@ export default function BasicLayout(props: any) {
 
   //当前微应用
   const [currentMicroApp, setCurrentMicroApp] = useState<string>('');
+
+  const containerRef = useRef();
 
   useEffect(() => {
     const storageMenu = storage.session.get('leftMenuList') as any;
@@ -120,23 +126,27 @@ export default function BasicLayout(props: any) {
   // 切换微应用，并把页面切换至微应用第一个菜单
   const handleChangeMicroApp = ({ key }: any) => {
     // 更新头部选中项
-    setHeaderSelectedKeys(key);
-
-    // 找到当前目标应用菜单项，更新左侧菜单
-    let microApp = MENU_LIST.find((item) => item.id == key) as IMenuType;
+    const microApp = MENU_LIST.find((item) => item.id == key) as IMenuType;
+    if (microApp.manual) {
+      const { appName, entry } = microApp;
+      loadMicroApp({
+        name: appName,
+        entry: entry,
+        container: '#ManualNode',
+      });
+    } else {
+      setCurrentMicroApp(microApp.appName);
+    }
+    // 头部
+    setHeaderSelected(microApp);
+    // 左侧
     setLeftMenuList(microApp?.children);
-
-    // 更新当前微应用
-    setCurrentMicroApp(microApp.appName);
-
     // 找到当前目标应用第一项菜单
     const microFirstMenu = microApp ? microApp.children[0] : {};
     microFirstMenu && history.push(microFirstMenu.path);
-
     // 选中第一项菜单
     setSelectedKeys(microFirstMenu?.id);
     setOpenKeys([]);
-
     storage.session.set('leftMenuList', microApp.children);
   };
 
@@ -168,7 +178,7 @@ export default function BasicLayout(props: any) {
     history.push('/home');
     //清除左侧菜单
     setLeftMenuList([]);
-    setHeaderSelectedKeys(['']);
+    setHeaderSelected(undefined);
     // 清除微应用
     setCurrentMicroApp('');
   };
@@ -216,7 +226,7 @@ export default function BasicLayout(props: any) {
           theme="dark"
           style={{ width: '80%' }}
           onSelect={handleChangeMicroApp}
-          selectedKeys={headerSelectedKeys as string[]}
+          selectedKeys={[headerSelected?.id] as unknown as string[]}
         >
           {headerNav(MENU_LIST)}
         </Menu>
@@ -230,8 +240,13 @@ export default function BasicLayout(props: any) {
         {visibleLeftMenu()}
         <Layout>
           <Content className="site-layout-background">
-            {props.children}
-            {shouldLoadMicroApp()}
+            {!headerSelected?.manual && (
+              <>
+                {shouldLoadMicroApp()}
+                {props.children}
+              </>
+            )}
+            <div id="ManualNode" style={{ height: 500 }}></div>
           </Content>
         </Layout>
       </Layout>

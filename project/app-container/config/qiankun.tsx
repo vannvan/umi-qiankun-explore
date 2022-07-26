@@ -27,10 +27,7 @@ export default {
           token: 'XXXXXXX',
         },
       },
-      // {
-      //   name: 'app-monitor',
-      //   entry: '//localhost:8005', // 监控中心，
-      // },
+
       {
         name: 'app-datum',
         entry: '//localhost:6008', // 数据中心，

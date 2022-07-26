@@ -7,7 +7,11 @@
  * --------
  * Copyright (c) github.com/vannvan
  */
-import { initGlobalState, MicroAppStateActions } from 'qiankun';
+import {
+  initGlobalState,
+  MicroAppStateActions,
+  addGlobalUncaughtErrorHandler,
+} from 'qiankun';
 
 console.log('[主应用]');
 const state = {
@@ -24,4 +28,8 @@ setTimeout(() => {
 actions.onGlobalStateChange((state, prev) => {
   // state: 变更后的状态; prev 变更前的状态
   console.log('主应用监听state变化：', state, prev);
+});
+
+addGlobalUncaughtErrorHandler((event) => {
+  console.log('全局错误----------', event);
 });

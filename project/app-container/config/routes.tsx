@@ -60,6 +60,7 @@ export default [
       wrapperClassName: 'micro-wrapper-loadding',
     },
   },
+
   {
     path: '/exception',
     routes: [

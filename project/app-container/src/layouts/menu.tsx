@@ -18,6 +18,7 @@ import {
 import deviceMenuList from './deviceMenu';
 import commonMenu from './commonMenu';
 import datumMenu from './datumMenu';
+import otherMenu from './otherMenu';
 import React from 'react';
 export default [
   { name: 'home', path: '/home', id: '1', icon: <HomeOutlined /> },
@@ -38,7 +39,7 @@ export default [
     children: datumMenu,
   },
   {
-    name: '智能监控(无子服务)',
+    name: '智能监控(无子应用)',
     path: '/monitor',
     id: '4',
     appName: 'app-monitor',
@@ -52,5 +53,15 @@ export default [
     appName: 'app-common',
     icon: <SettingOutlined />,
     children: commonMenu,
+  },
+  {
+    name: '手动加载',
+    path: '/other',
+    appName: 'app-other',
+    entry: '//localhost:6009',
+    id: '6',
+    manual: true,
+    icon: <SettingOutlined />,
+    children: otherMenu,
   },
 ];
